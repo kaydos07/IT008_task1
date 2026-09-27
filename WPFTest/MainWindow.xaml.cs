@@ -1,19 +1,7 @@
-﻿using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace WPFTest
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -21,22 +9,42 @@ namespace WPFTest
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        { }
-
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        private void ThemSinhVien_Click(object sender, RoutedEventArgs e)
         {
+            string maSinhVien = txtMaSinhVien.Text.Trim();
+            string hoTen = txtHoTen.Text.Trim();
+            string truong = txtTruong.Text.Trim();
 
+            if (maSinhVien == "" || hoTen == "" || truong == "")
+            {
+                MessageBox.Show("Vui lòng nhập đủ mã sinh viên, họ tên và trường.");
+                return;
+            }
+
+            string gioiTinh = "Khác";
+            if (radNam.IsChecked == true)
+                gioiTinh = "Nam";
+            else if (radNu.IsChecked == true)
+                gioiTinh = "Nữ";
+
+            
+            SinhVienControl sinhVien = new SinhVienControl(maSinhVien, hoTen, gioiTinh, truong);
+            lstSinhVien.Items.Add(sinhVien);
+            XoaForm();
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void NhapLai_Click(object sender, RoutedEventArgs e)
         {
-
+            XoaForm();
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void XoaForm()
         {
-
+            txtMaSinhVien.Clear();
+            txtHoTen.Clear();
+            txtTruong.Clear();
+            radNam.IsChecked = true;
+            txtMaSinhVien.Focus();
         }
     }
 }
