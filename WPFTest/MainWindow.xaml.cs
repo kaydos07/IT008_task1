@@ -10,7 +10,7 @@ namespace WPFTest
 
             btnNhapLai.Click += NhapLai_Click;
             btnThemSinhVien.Click += ThemSinhVien_Click;
-            
+
         }
 
         private void ThemSinhVien_Click(object sender, RoutedEventArgs e)
@@ -31,9 +31,9 @@ namespace WPFTest
             else if (radNu.IsChecked == true)
                 gioiTinh = "Nữ";
 
-            
+
             MessageBox.Show("Đã thêm sinh viên");
-            
+
             SinhVienControl sinhVien = new SinhVienControl(maSinhVien, hoTen, gioiTinh, truong);
             lstSinhVien.Items.Add(sinhVien);
             XoaForm();
@@ -53,6 +53,25 @@ namespace WPFTest
             txtMaSinhVien.Focus();
         }
 
+        private void btnFilter_Click(object sender, RoutedEventArgs e)
+        {
+            filterPopup.IsOpen = !filterPopup.IsOpen;
+        }
 
+        private void btnApplyFilter_Click(object sender, RoutedEventArgs e)
+        {
+            string name = txtMaSinhVien.Text;
+            string mssv = txtFilterMSSV.Text;
+
+            string gender = "";
+
+            if (filterNam.IsChecked == true)
+                gender = "Nam";
+
+            else if (filterNu.IsChecked == true)
+                gender = "Nu";
+
+            else if (filterKhac.IsChecked == true)
+                gender = "Khac";
+        }
     }
-}

@@ -58,12 +58,82 @@
             </StackPanel>
         </Grid>
 
-        <TextBlock Grid.Row="2" Text="Danh sách sinh viên" FontSize="18"
-                   FontWeight="Bold" Margin="0,20,0,10"/>
-        <ListView x:Name="lstSinhVien" Grid.Row="3"
-                  HorizontalContentAlignment="Stretch"
-                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-            <!--<local:SinhVienControl />-->
-        </ListView>
+        <Grid Grid.Row="2" Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="40"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="Danh sach sinh vien"
+                       FontSize="18"
+                       FontWeight="Bold"/>
+
+            <Button x:Name="btnFilter"
+                    Grid.Column="1"
+                    Width="30"
+                    Height="30"
+                    Background="White"
+                    BorderBrush="Black"
+                    BorderThickness="1"
+                    Click="btnFilter_Click" Margin="5,0,5,0" VerticalAlignment="Top">
+            </Button>
+
+            <Popup x:Name="filterPopup"
+                   PlacementTarget="{Binding ElementName=btnFilter}"
+                   Placement="Bottom"
+                   StaysOpen="False">
+            <Border Background="White"
+                    BorderBrush="Black"
+                    BorderThickness="1"
+                    Width="220"
+                    Padding="15">
+            <StackPanel>
+                <TextBlock Text="Loc sinh vien"
+                           FontSize="16"
+                           FontWeight="Bold"
+                           Margin="0,0,0,15"/>
+                
+                <TextBlock Text="Ten"/>
+                
+                <TextBox x:Name="txtFilterName"
+                         Height="30"
+                         Margin="0,5,0,10" />
+
+                <TextBlock Text="Gioi tinh"/>
+
+                <RadioButton x:Name="filterNam"
+                             Content="Nam"
+                             GroupName="FilterGender"/>
+
+                <RadioButton x:Name="filterNu"
+                             Content="Nu"
+                             GroupName="FilterGender"/> 
+                
+                <RadioButton x:Name="filterKhac"
+                             Content="Khac"
+                             GroupName="FilterGender"/>
+
+                <TextBlock Text="MSSV"
+                           Margin="0,10,0,0" />
+
+                <TextBox x:Name="txtFilterMSSV"
+                         Height="30"
+                         Margin="0,5"/>
+
+                <Button Content="Loc"
+                        Height="30"
+                        Margin="0,10,0,0"
+                        Click="btnApplyFilter_Click" />
+
+
+
+
+
+
+                    </StackPanel>
+            </Border>
+            </Popup>
+
+        </Grid>
     </Grid>
 </Window>
