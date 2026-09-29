@@ -1,14 +1,18 @@
 <UserControl x:Class="WPFTest.SinhVienControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d">
     <Grid Margin="8">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition  Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBlock x:Name="txtHoTen" FontSize="16" FontWeight="Bold" TextWrapping="Wrap"/>
-        <TextBlock x:Name="txtThongTin" Grid.Row="1" Margin="0,5,0,5" TextWrapping="Wrap"/>
-        <TextBlock x:Name="txtTruong" Grid.Row="2" TextWrapping="Wrap"/>
+        <TextBlock x:Name="txtHoTen" d:Text="Huy" Grid.Row="0"  FontSize="16" FontWeight="Bold" TextWrapping="Wrap" />
+        <Image HorizontalAlignment="right" Grid.RowSpan="3" Width="50" Source="/assets/imgMau.jpg" Stretch="Uniform"/>
+        <TextBlock x:Name="txtThongTin" d:Text="MSSV:25520682 || Giới tính:  Nam " Grid.Row="1" Margin="0,5,0,5" TextWrapping="Wrap"/>
+        <TextBlock x:Name="txtTruong" d:Text="UIT" Grid.Row="2" TextWrapping="Wrap"/>
     </Grid>
 </UserControl>

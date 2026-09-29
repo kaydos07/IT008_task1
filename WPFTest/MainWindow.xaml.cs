@@ -7,6 +7,10 @@ namespace WPFTest
         public MainWindow()
         {
             InitializeComponent();
+
+            btnNhapLai.Click += NhapLai_Click;
+            btnThemSinhVien.Click += ThemSinhVien_Click;
+            
         }
 
         private void ThemSinhVien_Click(object sender, RoutedEventArgs e)
@@ -28,6 +32,8 @@ namespace WPFTest
                 gioiTinh = "Nữ";
 
             
+            MessageBox.Show("Đã thêm sinh viên");
+            
             SinhVienControl sinhVien = new SinhVienControl(maSinhVien, hoTen, gioiTinh, truong);
             lstSinhVien.Items.Add(sinhVien);
             XoaForm();
@@ -46,5 +52,7 @@ namespace WPFTest
             radNam.IsChecked = true;
             txtMaSinhVien.Focus();
         }
+
+
     }
 }
