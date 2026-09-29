@@ -10,7 +10,6 @@ namespace WPFTest
 
             btnNhapLai.Click += NhapLai_Click;
             btnThemSinhVien.Click += ThemSinhVien_Click;
-
         }
 
         private void ThemSinhVien_Click(object sender, RoutedEventArgs e)
@@ -30,7 +29,6 @@ namespace WPFTest
                 gioiTinh = "Nam";
             else if (radNu.IsChecked == true)
                 gioiTinh = "Nữ";
-
 
             MessageBox.Show("Đã thêm sinh viên");
 
@@ -55,23 +53,49 @@ namespace WPFTest
 
         private void btnFilter_Click(object sender, RoutedEventArgs e)
         {
-            filterPopup.IsOpen = !filterPopup.IsOpen;
+            filterPopup.IsOpen = true;
         }
 
         private void btnApplyFilter_Click(object sender, RoutedEventArgs e)
         {
-            string name = txtMaSinhVien.Text;
-            string mssv = txtFilterMSSV.Text;
+            string name = txtFilterName.Text.Trim();
+            string mssv = txtFilterMSSV.Text.Trim();
 
             string gender = "";
-
             if (filterNam.IsChecked == true)
                 gender = "Nam";
-
             else if (filterNu.IsChecked == true)
-                gender = "Nu";
-
+                gender = "Nữ";
             else if (filterKhac.IsChecked == true)
-                gender = "Khac";
+                gender = "Khác";
+
+            lstSinhVien.Items.Filter = item =>
+            {
+                if (item is not SinhVienControl sv)
+                    return false;
+
+                bool okName = name == "" ||
+                    sv.HoTen.Contains(name, StringComparison.OrdinalIgnoreCase);
+                bool okMssv = mssv == "" ||
+                    sv.MaSinhVien.Contains(mssv, StringComparison.OrdinalIgnoreCase);
+                bool okGender = gender == "" || sv.GioiTinh == gender;
+
+                return okName && okMssv && okGender;
+            };
+
+            filterPopup.IsOpen = false;
+        }
+
+        private void btnClearFilter_Click(object sender, RoutedEventArgs e)
+        {
+            txtFilterName.Clear();
+            txtFilterMSSV.Clear();
+            filterNam.IsChecked = false;
+            filterNu.IsChecked = false;
+            filterKhac.IsChecked = false;
+
+            lstSinhVien.Items.Filter = null;
+            filterPopup.IsOpen = false;
         }
     }
+}
