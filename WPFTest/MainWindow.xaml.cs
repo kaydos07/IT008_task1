@@ -3,12 +3,15 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace WPFTest
 {
     public partial class MainWindow : Window
     {
         public ObservableCollection<SinhVien> DanhSachSinhVien { get; set; } = new();
+        private bool isDeleteMode = false;
 
         public MainWindow()
         {
@@ -19,6 +22,7 @@ namespace WPFTest
 
             lstSinhVien.ItemsSource = DanhSachSinhVien;
             lstSinhVien.MouseDoubleClick += lvSinhVien_MouseDoubleClick;
+            lstSinhVien.PreviewMouseLeftButtonDown += lstSinhVien_PreviewMouseLeftButtonDown;
         }
 
         private void ThemSinhVien_Click(object sender, RoutedEventArgs e)
@@ -48,6 +52,9 @@ namespace WPFTest
         }
         private void lvSinhVien_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            if (isDeleteMode)
+                return;
+
             if (lstSinhVien.SelectedItem is SinhVien selectedSinhVien)
             {
                 DetailWindow detailWin = new DetailWindow(selectedSinhVien);
@@ -70,6 +77,61 @@ namespace WPFTest
             txtTruong.Clear();
             radNam.IsChecked = true;
             txtMaSinhVien.Focus();
+        }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            SetDeleteMode(!isDeleteMode);
+
+            if (isDeleteMode)
+            {
+                MessageBox.Show(
+                    "Hãy bấm vào sinh viên bạn muốn xóa.",
+                    "Chế độ xóa",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+            }
+        }
+
+        private void lstSinhVien_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (!isDeleteMode)
+                return;
+
+            DependencyObject? source = e.OriginalSource as DependencyObject;
+            while (source != null && source is not ListViewItem)
+            {
+                source = VisualTreeHelper.GetParent(source);
+            }
+
+            if (source is not ListViewItem item || item.DataContext is not SinhVien selectedSinhVien)
+                return;
+
+            // Chặn sự kiện chọn/double-click để không mở cửa sổ chỉnh sửa khi đang xóa.
+            e.Handled = true;
+
+            MessageBoxResult result = MessageBox.Show(
+                $"Bạn có chắc muốn xóa sinh viên:\n\n" +
+                $"{selectedSinhVien.HoTen}\n" +
+                $"MSSV: {selectedSinhVien.MaSinhVien}?",
+                "Xác nhận xóa",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Warning);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                DanhSachSinhVien.Remove(selectedSinhVien);
+            }
+
+            // Sau một lần chọn sinh viên để xác nhận, tự thoát chế độ xóa.
+            SetDeleteMode(false);
+        }
+
+        private void SetDeleteMode(bool enabled)
+        {
+            isDeleteMode = enabled;
+            btnDelete.Background = enabled ? Brushes.LightCoral : Brushes.White;
+            btnDelete.ToolTip = enabled ? "Đang xóa - bấm lại để hủy" : "Xóa sinh viên";
         }
 
         private void btnFilter_Click(object sender, RoutedEventArgs e)
