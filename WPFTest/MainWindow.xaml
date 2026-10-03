@@ -35,7 +35,7 @@
 
             <TextBlock Grid.Row="1" Text="Họ tên:" VerticalAlignment="Center"/>
             <TextBox x:Name="txtHoTen" Grid.Row="1" Grid.Column="1"
-                     Margin="0,5" VerticalContentAlignment="Center"/>
+                     Margin="0,5" VerticalContentAlignment="Center" Text="{Binding HoTen, Mode=TwoWay}"/>
 
             <TextBlock Grid.Row="2" Text="Giới tính:" VerticalAlignment="Center"/>
             <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal"
@@ -44,7 +44,7 @@
                              IsChecked="True" Margin="0,0,25,0"/>
                 <RadioButton x:Name="radNu" Content="Nữ" GroupName="GioiTinh"
                              Margin="0,0,25,0"/>
-                <RadioButton Content="Khác" GroupName="GioiTinh"/>
+                <RadioButton x:Name="radKhac" Content="Khác" GroupName="GioiTinh"/>
             </StackPanel>
 
             <TextBlock Grid.Row="3" Text="Trường:" VerticalAlignment="Center"/>
@@ -60,7 +60,8 @@
 
         <Grid Grid.Row="2" Margin="0,0,0,10">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="40"/>
                 <ColumnDefinition Width="40"/>
             </Grid.ColumnDefinitions>
 
@@ -77,65 +78,73 @@
                     BorderThickness="1"
                     Click="btnFilter_Click" Margin="5,0,5,0" VerticalAlignment="Top"
                     Content="🔍" ToolTip="Lọc sinh viên"/>
+            <Button x:Name="btnEdit"
+                Grid.Column="2"
+                Width="30"
+                Background="White"
+                BorderBrush="Black"
+                BorderThickness="1"
+                Margin="5,0,5,0"
+                Content="📝" ToolTip="Chỉnh sửa sinh viên" Height="30" VerticalAlignment="Top"/>
 
             <Popup x:Name="filterPopup"
                    PlacementTarget="{Binding ElementName=btnFilter}"
                    Placement="Bottom"
                    StaysOpen="False">
-            <Border Background="White"
+                <Border Background="White"
                     BorderBrush="Black"
                     BorderThickness="1"
                     Width="220"
                     Padding="15">
-            <StackPanel>
-                <TextBlock Text="Lọc sinh viên"
+                    <StackPanel>
+                        <TextBlock Text="Lọc sinh viên"
                            FontSize="16"
                            FontWeight="Bold"
                            Margin="0,0,0,15"/>
-                
-                <TextBlock Text="Tên"/>
-                
-                <TextBox x:Name="txtFilterName"
+
+                        <TextBlock Text="Tên"/>
+
+                        <TextBox x:Name="txtFilterName"
                          Height="30"
                          Margin="0,5,0,10" />
 
-                <TextBlock Text="Giới tính"/>
+                        <TextBlock Text="Giới tính"/>
 
-                <RadioButton x:Name="filterNam"
+                        <RadioButton x:Name="filterNam"
                              Content="Nam"
                              GroupName="FilterGender"/>
 
-                <RadioButton x:Name="filterNu"
+                        <RadioButton x:Name="filterNu"
                              Content="Nữ"
-                             GroupName="FilterGender"/> 
-                
-                <RadioButton x:Name="filterKhac"
+                             GroupName="FilterGender"/>
+
+                        <RadioButton x:Name="filterKhac"
                              Content="Khác"
                              GroupName="FilterGender"/>
 
-                <TextBlock Text="MSSV"
+                        <TextBlock Text="MSSV"
                            Margin="0,10,0,0" />
 
-                <TextBox x:Name="txtFilterMSSV"
+                        <TextBox x:Name="txtFilterMSSV"
                          Height="30"
                          Margin="0,5"/>
 
-                <Button Content="Lọc"
+                        <Button Content="Lọc"
                         Height="30"
                         Margin="0,10,0,0"
                         Click="btnApplyFilter_Click" />
 
-                <Button Content="Xóa lọc"
+                        <Button Content="Xóa lọc"
                         Height="30"
                         Margin="0,5,0,0"
                         Click="btnClearFilter_Click" />
-</StackPanel>
-            </Border>
+                    </StackPanel>
+                </Border>
             </Popup>
 
         </Grid>
 
         <ListBox x:Name="lstSinhVien" Grid.Row="3"
-                 HorizontalContentAlignment="Stretch"/>
+                 HorizontalContentAlignment="Stretch" IsHitTestVisible="False"/>
     </Grid>
 </Window>

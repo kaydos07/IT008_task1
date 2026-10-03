@@ -1,16 +1,32 @@
 using System.Windows;
+using System.Windows.Controls;
 
 namespace WPFTest
 {
     public partial class MainWindow : Window
     {
+   
         public MainWindow()
         {
             InitializeComponent();
 
             btnNhapLai.Click += NhapLai_Click;
             btnThemSinhVien.Click += ThemSinhVien_Click;
+            btnEdit.Click += BtnEdit_Click;
+
         }
+
+       
+        private void BtnEdit_Click(object sender, RoutedEventArgs e)
+        {
+            if(lstSinhVien.IsHitTestVisible)
+            lstSinhVien.IsHitTestVisible = false;
+            else
+            lstSinhVien.IsHitTestVisible = true;
+            
+        }
+
+       
 
         private void ThemSinhVien_Click(object sender, RoutedEventArgs e)
         {
@@ -31,10 +47,33 @@ namespace WPFTest
                 gioiTinh = "Nữ";
 
             MessageBox.Show("Đã thêm sinh viên");
+            SinhVien newSinhVien = new SinhVien
+            {
+                MaSinhVien = maSinhVien,
+                HoTen = hoTen,
+                GioiTinh = gioiTinh,
+                Truong = truong
+            };
 
-            SinhVienControl sinhVien = new SinhVienControl(maSinhVien, hoTen, gioiTinh, truong);
-            lstSinhVien.Items.Add(sinhVien);
+            SinhVienControl sinhVien = new SinhVienControl();
+            sinhVien.DataContext = newSinhVien;
+            sinhVien.SinhVienClicked += SinhVien_Clicked;
+            lstSinhVien.Items.Add(newSinhVien);
             XoaForm();
+        }
+        private void SinhVien_Clicked(object? sender, SinhVien sinhvien)
+        {
+            if sender is not SinhVienControl svControl)
+                return;
+            txtHoTen.Text = sinhvien.HoTen;
+            txtMaSinhVien.Text = sinhvien.MaSinhVien;
+            txtTruong.Text = sinhvien.Truong;
+            if (sinhvien.GioiTinh == "Nam")
+                radNam.IsChecked = true;
+            else if (sinhvien.GioiTinh == "Nữ")
+                radNu.IsChecked = true;
+            else
+                radKhac.IsChecked = true;
         }
 
         private void NhapLai_Click(object sender, RoutedEventArgs e)

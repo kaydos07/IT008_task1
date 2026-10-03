@@ -1,30 +1,32 @@
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace WPFTest
 {
     public partial class SinhVienControl : UserControl
     {
-        public string MaSinhVien { get; private set; } = "";
-        public string HoTen { get; private set; } = "";
-        public string GioiTinh { get; private set; } = "";
-        public string Truong { get; private set; } = "";
+    
 
         public SinhVienControl()
         {
+            this.MouseLeftButtonDown += SinhVienControl_MouseLeftButtonDown;
             InitializeComponent();
         }
 
-        public SinhVienControl(string maSinhVien, string hoTen, string gioiTinh, string truong)
+        public SinhVienControl(SinhVien sv)
             : this()
         {
-            MaSinhVien = maSinhVien;
-            HoTen = hoTen;
-            GioiTinh = gioiTinh;
-            Truong = truong;
+            DataContext = sv;
+        }
+        public event EventHandler? SinhVienClicked;
 
-            txtHoTen.Text = hoTen;
-            txtThongTin.Text = "Mã SV: " + maSinhVien + "   |   Giới tính: " + gioiTinh;
-            txtTruong.Text = "Trường: " + truong;
+        private void SinhVienControl_MouseLeftButtonDown(
+            object sender,
+            MouseButtonEventArgs e)
+        {
+            if(DataContext is not SinhVien)
+                return;
+            SinhVienClicked?.Invoke(this, EventArgs.Empty);
         }
     }
 }
