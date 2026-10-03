@@ -135,7 +135,15 @@
 
         </Grid>
 
-        <ListBox x:Name="lstSinhVien" Grid.Row="3"
-                 HorizontalContentAlignment="Stretch"/>
+        <ListView x:Name="lstSinhVien" Grid.Row="3"
+                 HorizontalContentAlignment="Stretch">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <local:SinhVienControl/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Window>

@@ -1,15 +1,24 @@
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
 
 namespace WPFTest
 {
     public partial class MainWindow : Window
     {
+        public ObservableCollection<SinhVien> DanhSachSinhVien { get; set; } = new();
+
         public MainWindow()
         {
             InitializeComponent();
 
             btnNhapLai.Click += NhapLai_Click;
             btnThemSinhVien.Click += ThemSinhVien_Click;
+
+            lstSinhVien.ItemsSource = DanhSachSinhVien;
+            lstSinhVien.MouseDoubleClick += lvSinhVien_MouseDoubleClick;
         }
 
         private void ThemSinhVien_Click(object sender, RoutedEventArgs e)
@@ -30,11 +39,23 @@ namespace WPFTest
             else if (radNu.IsChecked == true)
                 gioiTinh = "Nữ";
 
-            MessageBox.Show("Đã thêm sinh viên");
+            var sinhVien = new SinhVien { MaSinhVien = maSinhVien, HoTen = hoTen, GioiTinh = gioiTinh, Truong = truong };
 
-            SinhVienControl sinhVien = new SinhVienControl(maSinhVien, hoTen, gioiTinh, truong);
-            lstSinhVien.Items.Add(sinhVien);
+            DanhSachSinhVien.Add(sinhVien);
+
+            MessageBox.Show("Đã thêm sinh viên");
             XoaForm();
+        }
+        private void lvSinhVien_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (lstSinhVien.SelectedItem is SinhVien selectedSinhVien)
+            {
+                DetailWindow detailWin = new DetailWindow(selectedSinhVien);
+
+                detailWin.Owner = this;
+
+                detailWin.ShowDialog();
+            }
         }
 
         private void NhapLai_Click(object sender, RoutedEventArgs e)
@@ -69,15 +90,14 @@ namespace WPFTest
             else if (filterKhac.IsChecked == true)
                 gender = "Khác";
 
-            lstSinhVien.Items.Filter = item =>
-            {
-                if (item is not SinhVienControl sv)
-                    return false;
 
-                bool okName = name == "" ||
-                    sv.HoTen.Contains(name, StringComparison.OrdinalIgnoreCase);
-                bool okMssv = mssv == "" ||
-                    sv.MaSinhVien.Contains(mssv, StringComparison.OrdinalIgnoreCase);
+            ICollectionView view = CollectionViewSource.GetDefaultView(lstSinhVien.ItemsSource);
+            view.Filter = item =>
+            {
+                if (item is not SinhVien sv) return false;
+
+                bool okName = name == "" || sv.HoTen.Contains(name, StringComparison.OrdinalIgnoreCase);
+                bool okMssv = mssv == "" || sv.MaSinhVien.Contains(mssv, StringComparison.OrdinalIgnoreCase);
                 bool okGender = gender == "" || sv.GioiTinh == gender;
 
                 return okName && okMssv && okGender;

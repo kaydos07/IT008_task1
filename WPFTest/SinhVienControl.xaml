@@ -10,9 +10,13 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBlock x:Name="txtHoTen" d:Text="Huy" Grid.Row="0"  FontSize="16" FontWeight="Bold" TextWrapping="Wrap" />
-        <Image HorizontalAlignment="right" Grid.RowSpan="3" Width="50" Source="/assets/imgMau.jpg" Stretch="Uniform"/>
-        <TextBlock x:Name="txtThongTin" d:Text="MSSV:25520682 || Giới tính:  Nam " Grid.Row="1" Margin="0,5,0,5" TextWrapping="Wrap"/>
-        <TextBlock x:Name="txtTruong" d:Text="UIT" Grid.Row="2" TextWrapping="Wrap"/>
+        <TextBlock Text="{Binding HoTen}" Grid.Row="0" FontSize="16" FontWeight="Bold" Foreground="#1E3A8A"/>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,4">
+            <TextBlock Text="Mã SV: " Foreground="#555"/>
+            <TextBlock Text="{Binding MaSinhVien}" FontWeight="SemiBold" Margin="0,0,15,0"/>
+            <TextBlock Text="Giới tính: " Foreground="#555"/>
+            <TextBlock Text="{Binding GioiTinh}"/>
+        </StackPanel>
+        <TextBlock Grid.Row="2" Text="{Binding Truong, StringFormat='Trường: {0}'}" Foreground="#666"/>
     </Grid>
 </UserControl>

@@ -1,0 +1,23 @@
+﻿<Window x:Class="WPFTest.DetailWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        WindowStartupLocation="CenterOwner">
+    <StackPanel Margin="20">
+        <TextBlock Text="Chỉnh sửa thông tin sinh viên" FontSize="18" FontWeight="Bold" Margin="0,0,0,15"/>
+
+        <TextBlock Text="Mã sinh viên:" Margin="0,2"/>
+        <TextBox Text="{Binding MaSinhVien, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,8" Height="28"/>
+
+        <TextBlock Text="Họ tên:" Margin="0,2"/>
+        <!-- Mode=TwoWay và PropertyChanged giúp khi gõ, ListView ngoài màn hình chính đổi theo ngay -->
+        <TextBox Text="{Binding HoTen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,8" Height="28"/>
+
+        <TextBlock Text="Giới tính:" Margin="0,2"/>
+        <TextBox Text="{Binding GioiTinh, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,8" Height="28"/>
+
+        <TextBlock Text="Trường:" Margin="0,2"/>
+        <TextBox Text="{Binding Truong, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,15" Height="28"/>
+
+        <Button Content="Đóng" Width="90" Height="30" HorizontalAlignment="Right" Click="BtnDong_Click"/>
+    </StackPanel>
+</Window>
