@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Media;
 
 namespace WPFTest
 {
@@ -9,6 +10,13 @@ namespace WPFTest
         private string _hoTen = string.Empty;
         private string _gioiTinh = string.Empty;
         private string _truong = string.Empty;
+        private ImageSource? _avatar;
+
+        public ImageSource? Avatar
+        {
+            get => _avatar;
+            set { _avatar = value; OnPropertyChanged(); }
+        }
 
         public string MaSinhVien
         {

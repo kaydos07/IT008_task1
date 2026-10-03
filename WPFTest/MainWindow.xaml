@@ -1,9 +1,9 @@
 <Window x:Class="WPFTest.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Thông tin sinh viên" Height="600" Width="640"
+        Title="Thông tin sinh viên" Height="680" Width="640"
         xmlns:local="clr-namespace:WPFTest"
-        MinHeight="520" MinWidth="500" WindowStartupLocation="CenterScreen">
+        MinHeight="600" MinWidth="500" WindowStartupLocation="CenterScreen">
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -26,6 +26,7 @@
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
+                <RowDefinition Height="80"/>
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
 
@@ -51,7 +52,17 @@
             <TextBox x:Name="txtTruong" Grid.Row="3" Grid.Column="1"
                      Margin="0,5" VerticalContentAlignment="Center"/>
 
+            <TextBlock Grid.Row="4" Text="Avatar:" VerticalAlignment="Center"/>
             <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal"
+                        VerticalAlignment="Center">
+                <Image x:Name="imgAvatar" Width="64" Height="64" Stretch="Uniform"/>
+                <Button Content="Chọn ảnh" Width="90" Height="30" Margin="10,0,0,0"
+                        Click="ChonAnh_Click"/>
+                <Button Content="Xóa ảnh" Width="70" Height="30" Margin="10,0,0,0"
+                        Click="XoaAnh_Click"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal"
                         VerticalAlignment="Center">
                 <Button x:Name="btnThemSinhVien" Content="Thêm sinh viên" Width="130" Height="32"/>
                 <Button x:Name="btnNhapLai" Content="Nhập lại" Width="90" Height="32" Margin="10,0,0,0"/>
@@ -150,6 +161,7 @@
         </Grid>
 
         <ListView x:Name="lstSinhVien" Grid.Row="3"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  HorizontalContentAlignment="Stretch">
             <ListView.ItemTemplate>
                 <DataTemplate>

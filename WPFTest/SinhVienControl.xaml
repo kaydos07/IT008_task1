@@ -5,18 +5,31 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d">
     <Grid Margin="8">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition  Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="{Binding HoTen}" Grid.Row="0" FontSize="16" FontWeight="Bold" Foreground="#1E3A8A"/>
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,4">
-            <TextBlock Text="Mã SV: " Foreground="#555"/>
-            <TextBlock Text="{Binding MaSinhVien}" FontWeight="SemiBold" Margin="0,0,15,0"/>
-            <TextBlock Text="Giới tính: " Foreground="#555"/>
-            <TextBlock Text="{Binding GioiTinh}"/>
-        </StackPanel>
-        <TextBlock Grid.Row="2" Text="{Binding Truong, StringFormat='Trường: {0}'}" Foreground="#666"/>
+        <TextBlock Text="{Binding HoTen}" Grid.Row="0" FontSize="16" FontWeight="Bold" Foreground="#1E3A8A" TextWrapping="Wrap"/>
+        <WrapPanel Grid.Row="1" Margin="0,4">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Mã SV: " Foreground="#555"/>
+                <TextBlock Text="{Binding MaSinhVien}" FontWeight="SemiBold" Margin="0,0,15,0"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Giới tính: " Foreground="#555"/>
+                <TextBlock Text="{Binding GioiTinh}"/>
+            </StackPanel>
+        </WrapPanel>
+        <TextBlock Grid.Row="2" Text="{Binding Truong, StringFormat='Trường: {0}'}" Foreground="#666" TextWrapping="Wrap"/>
+        <Border Grid.Column="1" Grid.RowSpan="3" Width="72" Height="72"
+                Margin="12,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Right"
+                Background="#EEF2F7" BorderBrush="#CBD5E1" BorderThickness="1">
+            <Image Source="{Binding Avatar}" Stretch="Uniform"/>
+        </Border>
     </Grid>
 </UserControl>

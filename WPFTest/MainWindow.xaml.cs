@@ -5,6 +5,8 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using Microsoft.Win32;
 
 namespace WPFTest
 {
@@ -25,6 +27,30 @@ namespace WPFTest
             lstSinhVien.PreviewMouseLeftButtonDown += lstSinhVien_PreviewMouseLeftButtonDown;
         }
 
+        private void ChonAnh_Click(object sender, RoutedEventArgs e)
+        {
+            // Mở hộp thoại để người dùng chọn một tệp ảnh.
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "Tệp ảnh|*.jpg;*.jpeg;*.png;*.bmp;*.gif";
+
+            if (dialog.ShowDialog() == true)
+            {
+                try
+                {
+                    imgAvatar.Source = new BitmapImage(new Uri(dialog.FileName));
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Không mở được ảnh. Vui lòng chọn ảnh khác.");
+                }
+            }
+        }
+
+        private void XoaAnh_Click(object sender, RoutedEventArgs e)
+        {
+            imgAvatar.Source = null;
+        }
+
         private void ThemSinhVien_Click(object sender, RoutedEventArgs e)
         {
             string maSinhVien = txtMaSinhVien.Text.Trim();
@@ -43,7 +69,14 @@ namespace WPFTest
             else if (radNu.IsChecked == true)
                 gioiTinh = "Nữ";
 
-            var sinhVien = new SinhVien { MaSinhVien = maSinhVien, HoTen = hoTen, GioiTinh = gioiTinh, Truong = truong };
+            var sinhVien = new SinhVien
+            {
+                MaSinhVien = maSinhVien,
+                HoTen = hoTen,
+                GioiTinh = gioiTinh,
+                Truong = truong,
+                Avatar = imgAvatar.Source
+            };
 
             DanhSachSinhVien.Add(sinhVien);
 
@@ -76,6 +109,7 @@ namespace WPFTest
             txtHoTen.Clear();
             txtTruong.Clear();
             radNam.IsChecked = true;
+            imgAvatar.Source = null;
             txtMaSinhVien.Focus();
         }
 
